@@ -12,6 +12,6 @@ class Tabatas < Sinatra::Base
   set :database, "sqlite3:///tabatas.sqlite3"
 end
 
-%w(models views routes post_init_hooks).each do |dir|
+%w(models views routes).each do |dir|
   Dir["./#{dir}/**/*.rb"].each { |file| require file } 
 end
