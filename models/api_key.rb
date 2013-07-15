@@ -2,7 +2,7 @@ class ApiKey < ActiveRecord::Base
   after_initialize :init
   
   def init
-    self.key ||= 12345
+    self.key ||= generate_key
     self.perms ||= :all
   end
 

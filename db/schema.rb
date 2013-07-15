@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130714025835) do
+ActiveRecord::Schema.define(version: 20130714210849) do
 
   create_table "api_keys", force: true do |t|
-    t.string "key"
-    t.string "perms"
+    t.string   "key"
+    t.string   "perms"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tabata", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.boolean  "done"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

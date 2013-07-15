@@ -6,6 +6,7 @@ Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
 require 'sinatra/base'
 require 'sinatra/activerecord'
+require 'json'
 
 class Tabatas < Sinatra::Base
   register Sinatra::ActiveRecordExtension
