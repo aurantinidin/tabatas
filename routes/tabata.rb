@@ -1,34 +1,37 @@
 class Tabatas < Sinatra::Base
-  get '/' do
-    'web interface here'
-  end
-
   before '/tabatas*' do
     halt 401, 'Access denied :(' unless params[:key] == ApiKey.first.key
+    content_type :json
   end
 
   get '/tabatas' do
-    content_type :json
     Tabata.all.to_json
   end
 
-  get '/tabatas/add' do
-
+  post '/tabatas/add' do
+    halt 500 if params[:name].nil?
+    tabata = Tabata.new(:name => params[:name], 
+                        :description => params[:description] || '',
+                        :done => params[:done] || false)
+    tabata.save!
+    tabata.to_json
   end
 
-  get '/tabatas/:id/show' do
-
+  post '/tabatas/:id/mark' do
+    tabata = Tabata.find(params[:id])
+    tabata.done = true
+    tabata.save!
+    tabata.to_json
   end
 
-  get '/tabatas/:id/mark_done' do
-
+  post '/tabatas/:id/unmark' do
+    tabata = Tabata.find(params[:id])
+    tabata.done = false
+    tabata.save!
+    tabata.to_json
   end
 
-  get '/tabatas/:id/mark_ready' do
-
-  end
-
-  get '/tabatas/:id/delete' do
-
+  delete '/tabatas/:id' do
+    Tabata.find(params[:id]).delete
   end
 end
