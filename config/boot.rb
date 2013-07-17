@@ -14,5 +14,5 @@ class Tabatas < Sinatra::Base
 end
 
 %w(models views routes).each do |dir|
-  Dir["./#{dir}/**/*.rb"].each { |file| require file } 
+  Dir["./#{dir}/**/*.rb"].each { |file| require file }
 end

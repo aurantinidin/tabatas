@@ -25,18 +25,18 @@ describe 'tabatas' do
   end
 
   it 'should add a valid Tabata' do
-    response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { name: "Test", description: "Description", done: true }
+    response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { name: "Test", done: true }
     response.code.should eq 200
   end
 
   it 'should not add an invalid Tabata' do
-    response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { description: "Fail" }
+    response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { done: false }
     response.code.should eq 500
   end
 
   context 'with an existing tabata' do
     before do
-      @tabata = Tabata.create! name: "Test", description: "Description", done: false
+      @tabata = Tabata.create! name: "Test", done: false
     end
 
     it 'should mark a Tabata as done' do

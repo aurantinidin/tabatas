@@ -1,6 +1,6 @@
 class ApiKey < ActiveRecord::Base
   after_initialize :init
-  
+
   def init
     self.key ||= generate_key
     self.perms ||= :all

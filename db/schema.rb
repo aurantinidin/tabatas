@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20130714210849) do
 
   create_table "tabata", force: true do |t|
     t.string   "name"
-    t.string   "description"
     t.boolean  "done"
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -10,8 +10,7 @@ class Tabatas < Sinatra::Base
 
   post '/tabatas/add' do
     halt 500 if params[:name].nil?
-    tabata = Tabata.new(:name => params[:name], 
-                        :description => params[:description] || '',
+    tabata = Tabata.new(:name => params[:name],
                         :done => params[:done] || false)
     tabata.save!
     tabata.to_json
