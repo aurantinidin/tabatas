@@ -10,8 +10,10 @@ require 'json'
 
 class Tabatas < Sinatra::Base
   register Sinatra::ActiveRecordExtension
-  set :database, "sqlite3:///tabatas.sqlite3"
+  set :database, "sqlite3:///tabatas.sqlite3" if ENV['RACK_ENV'] == 'development'
 end
+
+ActiveRecord::Base.establish_connection ENV['DATABASE_URL'] if ENV['RACK_ENV'] == 'production'
 
 %w(models views routes).each do |dir|
   Dir["./#{dir}/**/*.rb"].each { |file| require file }
