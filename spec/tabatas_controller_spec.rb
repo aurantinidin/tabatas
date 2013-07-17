@@ -27,6 +27,7 @@ describe 'tabatas' do
   it 'should add a valid Tabata' do
     response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { name: "Test", done: true }
     response.code.should eq 200
+    response.body.should eq "'Test' saved successfully"
   end
 
   it 'should not add an invalid Tabata' do
@@ -40,20 +41,21 @@ describe 'tabatas' do
     end
 
     it 'should mark a Tabata as done' do
-      response = JSON.parse App.post("/tabatas/#{@tabata.id}/mark?key=#{@valid_api_key}").body
-      response["done"].should eq true
+      response = App.post("/tabatas/#{@tabata.id}/mark?key=#{@valid_api_key}").body
+      response.should eq "'Test' marked done"
     end
 
     it 'should unmark a Tabata as done' do
       @tabata.done = true
       @tabata.save!
-      response = JSON.parse App.post("/tabatas/#{@tabata.id}/unmark?key=#{@valid_api_key}").body
-      response["done"].should eq false
+      response = App.post("/tabatas/#{@tabata.id}/unmark?key=#{@valid_api_key}").body
+      response.should eq "'Test' marked not done"
     end
 
     it 'should delete a Tabata' do
       response = App.delete "/tabatas/#{@tabata.id}?key=#{@valid_api_key}"
       response.code.should eq 200
+      response.body.should eq "'Test' deleted successfully"
       Tabata.count.should eq 0
     end
   end

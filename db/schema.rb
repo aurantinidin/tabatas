@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20130714210849) do
   end
 
   create_table "tabata", force: true do |t|
-    t.string   "name"
-    t.boolean  "done"
+    t.string   "name",                       null: false
+    t.boolean  "done",       default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
