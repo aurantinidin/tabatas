@@ -22,4 +22,8 @@ describe Tabata do
     Tabata.random.should_not eq @t3
   end
 
+  it 'should not create duplicates' do
+    expect { Tabata.create! name: 'one' }.to raise_error
+  end
+
 end

@@ -43,8 +43,8 @@ class Tabatas < Sinatra::Base
     "'#{tabata.name}' marked not done"
   end
 
-  delete '/tabatas/:id' do
-    tabata = Tabata.find params[:id]
+  delete '/tabatas/:name' do
+    tabata = Tabata.where(name: params[:name]).first
     message = "'#{tabata.name}' deleted successfully"
     tabata.delete
     message

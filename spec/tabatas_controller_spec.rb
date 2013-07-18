@@ -59,7 +59,7 @@ describe 'tabatas' do
     end
 
     it 'should delete a Tabata' do
-      response = App.delete "/tabatas/#{@tabata.id}?key=#{@valid_api_key}"
+      response = App.delete "/tabatas/#{@tabata.name}?key=#{@valid_api_key}"
       response.body.should eq "'Test' deleted successfully"
       Tabata.count.should eq 0
     end
