@@ -28,6 +28,7 @@ describe 'tabatas' do
     response = App.post "/tabatas/add?key=#{@valid_api_key}", body: { name: "Test", done: true }
     response.code.should eq 200
     response.body.should eq "'Test' saved successfully"
+    Tabata.first.name.should eq "Test"
   end
 
   it 'should not add an invalid Tabata' do
@@ -54,9 +55,28 @@ describe 'tabatas' do
 
     it 'should delete a Tabata' do
       response = App.delete "/tabatas/#{@tabata.id}?key=#{@valid_api_key}"
-      response.code.should eq 200
       response.body.should eq "'Test' deleted successfully"
       Tabata.count.should eq 0
+    end
+
+    context 'and a couple extra tabatas' do
+      before do
+        Tabata.create! name: "Test2", done: false
+        Tabata.create! name: "Test3", done: true
+      end
+
+      it 'should do a tabata' do
+        response = App.post "/tabatas/do?key=#{@valid_api_key}"
+        response.body.should match(/Today you're doing \w+!/)
+        Tabata.where(done: true).count.should eq 2
+        response = App.post "/tabatas/do?key=#{@valid_api_key}"
+        Tabata.where(done: true).count.should eq 3
+      end
+
+      it 'should list all tabatas' do
+        response = App.get "/tabatas?key=#{@valid_api_key}"
+        response.body.should eq "  Test\n  Test2\nX Test3"
+      end
     end
   end
 end

@@ -4,7 +4,7 @@ class Tabatas < Sinatra::Base
   end
 
   get '/tabatas' do
-    Tabata.all.map { |tabata| "#{tabata.name} (#{tabata.status})" }.join "\n"
+    Tabata.all.map { |tabata| "#{tabata.done ? 'X' : ' '} #{tabata.name}" }.join "\n"
   end
 
   post '/tabatas/add' do
