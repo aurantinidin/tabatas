@@ -4,6 +4,7 @@ class Tabatas < Sinatra::Base
   end
 
   get '/tabatas' do
+    return 'No tabatas!' if Tabata.count == 0
     Tabata.all.map { |tabata| "#{tabata.done ? 'X' : ' '} #{tabata.name}" }.join "\n"
   end
 
@@ -16,6 +17,7 @@ class Tabatas < Sinatra::Base
   end
 
   post '/tabatas/do' do
+    return 'No tabatas!' if Tabata.count == 0
     message = ''
     if Tabata.where(done: false).count == 0
       message = "All tabatas done! Resetting...\n"

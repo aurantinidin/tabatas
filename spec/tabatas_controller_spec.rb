@@ -36,6 +36,11 @@ describe 'tabatas' do
     response.code.should eq 500
   end
 
+  it 'should show a message when there are no tabatas' do
+    response = App.get "/tabatas?key=#{@valid_api_key}"
+    response.body.should eq "No tabatas!"
+  end
+
   context 'with an existing tabata' do
     before do
       @tabata = Tabata.create! name: "Test", done: false
