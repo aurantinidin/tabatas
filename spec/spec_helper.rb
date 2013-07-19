@@ -11,4 +11,5 @@ end
 class App
   include HTTParty
   base_uri 'localhost:9292'
+  default_params :key => ApiKey.first.key
 end
