@@ -43,24 +43,24 @@ describe 'tabatas' do
 
   context 'with an existing tabata' do
     before do
-      @tabata = Tabata.create! name: "Test", done: false
+      @tabata = Tabata.create! name: "Test Tabata", done: false
     end
 
     it 'should mark a Tabata as done' do
-      response = App.post("/tabatas/#{@tabata.id}/mark").body
-      response.should eq "'Test' marked done"
+      response = App.post("/tabatas/mark", body: { name: @tabata.name }).body
+      response.should eq "'Test Tabata' marked done"
     end
 
     it 'should unmark a Tabata as done' do
       @tabata.done = true
       @tabata.save!
-      response = App.post("/tabatas/#{@tabata.id}/unmark").body
-      response.should eq "'Test' marked not done"
+      response = App.post("/tabatas/unmark", body: { name: @tabata.name }).body
+      response.should eq "'Test Tabata' marked not done"
     end
 
     it 'should delete a Tabata' do
-      response = App.delete "/tabatas/#{@tabata.name}"
-      response.body.should eq "'Test' deleted successfully"
+      response = App.delete "/tabatas", body: { name: @tabata.name }
+      response.body.should eq "'Test Tabata' deleted successfully"
       Tabata.count.should eq 0
     end
 
@@ -80,7 +80,7 @@ describe 'tabatas' do
 
       it 'should list all tabatas' do
         response = App.get "/tabatas"
-        response.body.should eq "  Test\n  Test2\nX Test3"
+        response.body.should eq "  Test Tabata\n  Test2\nX Test3"
       end
     end
   end

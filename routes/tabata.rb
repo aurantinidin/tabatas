@@ -10,9 +10,7 @@ class Tabatas < Sinatra::Base
 
   post '/tabatas/add' do
     halt 500 if params[:name].nil?
-    tabata = Tabata.new(:name => params[:name],
-                        :done => params[:done])
-    tabata.save!
+    tabata = Tabata.create!(:name => params[:name])
     "'#{tabata.name}' saved successfully"
   end
 
@@ -29,21 +27,21 @@ class Tabatas < Sinatra::Base
     message << "Today you're doing #{tabata.name}!"
   end
 
-  post '/tabatas/:id/mark' do
-    tabata = Tabata.find(params[:id])
+  post '/tabatas/mark' do
+    tabata = Tabata.where(name: params[:name]).first
     tabata.done = true
     tabata.save!
     "'#{tabata.name}' marked done"
   end
 
-  post '/tabatas/:id/unmark' do
-    tabata = Tabata.find(params[:id])
+  post '/tabatas/unmark' do
+    tabata = Tabata.where(name: params[:name]).first
     tabata.done = false
     tabata.save!
     "'#{tabata.name}' marked not done"
   end
 
-  delete '/tabatas/:name' do
+  delete '/tabatas' do
     tabata = Tabata.where(name: params[:name]).first
     message = "'#{tabata.name}' deleted successfully"
     tabata.delete
