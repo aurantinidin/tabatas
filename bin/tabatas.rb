@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'httparty'
 
 USAGE_MESSAGE = "Usage: tabatas {list,do,add,mark,unmark,delete} <name>"
@@ -19,18 +20,18 @@ end
 name = ARGV[1..-1].join(' ') if ARGV[1]
 
 case ARGV[0]
-when /list/i
+when /^list/i
   puts Api.get '/tabatas'
-when /add/i
-  puts Api.post '/tabatas/add', body: { name: name }
-when /do/i
+when /^add/i
+  puts Api.post '/tabatas/add', :body => { :name => name }
+when /^do/i
   puts Api.post '/tabatas/do'
-when /mark/i
-  puts Api.post "/tabatas/mark", body: { name: name }
-when /unmark/i
-  puts Api.post "/tabatas/unmark", body: { name: name }
-when /delete/i
-  puts Api.delete "/tabatas", body: { name: name }
+when /^unmark/i
+  puts Api.post "/tabatas/unmark", :body => { :name => name }
+when /^mark/i
+  puts Api.post "/tabatas/mark", :body => { :name => name }
+when /^delete/i
+  puts Api.delete "/tabatas", :body => { :name => name }
 else
   puts USAGE_MESSAGE
 end

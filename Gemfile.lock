@@ -75,16 +75,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
-  httparty
+  activesupport (~> 4.0.0)
+  httparty (~> 0.11.0)
   json
-  pg
+  pg (~> 0.14.1)
   pry
   rack-test
   rake
-  rspec
+  rspec (~> 2.12.0)
   shotgun
-  sinatra
-  sinatra-activerecord
+  sinatra (~> 1.4.3)
+  sinatra-activerecord (~> 1.2.3)
   sqlite3
-  thin
+  thin (~> 1.5.1)
