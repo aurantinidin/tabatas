@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'tabatas' do
+describe 'the tabatas app' do
   before(:all) do
     @valid_api_key = ApiKey.first.key
   end
@@ -48,7 +48,8 @@ describe 'tabatas' do
 
     it 'should mark a Tabata as done' do
       response = App.post("/tabatas/mark", body: { name: @tabata.name }).body
-      response.should eq "'Test Tabata' marked done"
+      response.should eq "'#{@tabata.name}' marked done"
+      Tabata.where(done: true).count.should eq 1
     end
 
     it 'should unmark a Tabata as done' do
@@ -56,18 +57,25 @@ describe 'tabatas' do
       @tabata.save!
       response = App.post("/tabatas/unmark", body: { name: @tabata.name }).body
       response.should eq "'Test Tabata' marked not done"
+      Tabata.where(done: true).count.should eq 0
     end
 
     it 'should delete a Tabata' do
       response = App.delete "/tabatas", body: { name: @tabata.name }
-      response.body.should eq "'Test Tabata' deleted successfully"
+      response.body.should eq "'#{@tabata.name}' deleted successfully"
       Tabata.count.should eq 0
+    end
+
+    it 'should return an error message when trying to add a duplicate' do
+      response = App.post "/tabatas/add", body: { name: @tabata.name }
+      response.body.should eq "'#{@tabata.name}' already exists!"
+      Tabata.count.should eq 1
     end
 
     context 'and a couple extra tabatas' do
       before do
-        Tabata.create! name: "Test2", done: false
-        Tabata.create! name: "Test3", done: true
+        @tabata2 = Tabata.create! name: "Test2", done: false
+        @tabata3 = Tabata.create! name: "Test3", done: true
       end
 
       it 'should do a tabata' do
@@ -80,7 +88,7 @@ describe 'tabatas' do
 
       it 'should list all tabatas' do
         response = App.get "/tabatas"
-        response.body.should eq "  Test Tabata\n  Test2\nX Test3"
+        response.body.should eq "  #{@tabata.name}\n  #{@tabata2.name}\nX #{@tabata3.name}"
       end
     end
   end

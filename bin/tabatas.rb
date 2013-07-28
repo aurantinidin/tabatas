@@ -6,7 +6,7 @@ BASE_URI = ENV['LOCAL'] ? 'localhost:9292' : 'ove-tabatas.herokuapp.com'
 key_file = "#{File.dirname(__FILE__)}/" + (ENV['LOCAL'] ? 'local_key' : 'prod_key')
 API_KEY = File.read(key_file).chomp
 
-if ARGV.size == 0
+if ARGV.empty?
   puts USAGE_MESSAGE
   exit
 end
@@ -19,19 +19,19 @@ end
 
 name = ARGV[1..-1].join(' ') if ARGV[1]
 
-case ARGV[0]
-when /^list/i
-  puts Api.get '/tabatas'
-when /^add/i
-  puts Api.post '/tabatas/add', :body => { :name => name }
-when /^do/i
-  puts Api.post '/tabatas/do'
-when /^unmark/i
-  puts Api.post "/tabatas/unmark", :body => { :name => name }
-when /^mark/i
-  puts Api.post "/tabatas/mark", :body => { :name => name }
-when /^delete/i
-  puts Api.delete "/tabatas", :body => { :name => name }
+puts case ARGV[0]
+when /^list$/i
+  Api.get '/tabatas'
+when /^add$/i
+  Api.post '/tabatas/add', :body => { :name => name }
+when /^do$/i
+  Api.post '/tabatas/do'
+when /^unmark$/i
+  Api.post "/tabatas/unmark", :body => { :name => name }
+when /^mark$/i
+  Api.post "/tabatas/mark", :body => { :name => name }
+when /^delete$/i
+  Api.delete "/tabatas", :body => { :name => name }
 else
-  puts USAGE_MESSAGE
+  USAGE_MESSAGE
 end
