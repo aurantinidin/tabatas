@@ -32,8 +32,8 @@ describe 'the tabatas app' do
   end
 
   it 'should not add an invalid Tabata' do
-    response = App.post "/tabatas/add", body: { done: false }
-    response.code.should eq 500
+    App.post "/tabatas/add", body: { done: false }
+    Tabata.count.should eq 0
   end
 
   it 'should show a message when there are no tabatas' do
@@ -68,7 +68,7 @@ describe 'the tabatas app' do
 
     it 'should return an error message when trying to add a duplicate' do
       response = App.post "/tabatas/add", body: { name: @tabata.name }
-      response.body.should eq "'#{@tabata.name}' already exists!"
+      response.body.should match(/.*name.*has already been taken/)
       Tabata.count.should eq 1
     end
 

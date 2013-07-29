@@ -10,8 +10,7 @@ class Tabatas < Sinatra::Base
 
   post '/tabatas/add' do
     tabata = Tabata.new(name: params[:name])
-    return "'#{params[:name]}' already exists!" if !tabata.valid? && tabata.name
-    tabata.save!
+    return tabata.errors.messages.to_s if !tabata.save
     "'#{tabata.name}' saved successfully"
   end
 
