@@ -22,9 +22,7 @@ class Tabatas < Sinatra::Base
       Tabata.reset_all
     end
     tabata = Tabata.random
-    tabata.done = true
-    tabata.save!
-    message << "Today you're doing #{tabata.name}!"
+    message << "You should do #{tabata.name}!"
   end
 
   post '/tabatas/mark' do

@@ -80,13 +80,10 @@ describe 'the tabatas app' do
 
       it 'should do a tabata' do
         response = App.post "/tabatas/do"
-        response.body.should match(/Today you're doing (.* *)+!/)
-        Tabata.where(done: true).count.should eq 2
-        response = App.post "/tabatas/do"
-        Tabata.where(done: true).count.should eq 3
+        response.body.should match(/You should do (.* *)+!/)
       end
 
-      it 'should list all tabatas' do
+      it 'should list all tabatas with a specific format' do
         response = App.get "/tabatas"
         response.body.should eq "  #{@tabata.name}\n  #{@tabata2.name}\nX #{@tabata3.name}"
       end
